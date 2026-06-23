@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>@yield('title', 'Menu') – Café Arborea Jatijajar</title>
+    <title>@yield('title', 'Menu') – Café Arborea</title>
+    <link rel="icon" type="image/png" href="{{ asset('images/logo.png') }}">
     <meta name="description" content="Pesan menu lezat dari Café Arborea Jatijajar secara digital. Scan QR Code dan nikmati kemudahan memesan.">
 
     {{-- Google Fonts --}}
@@ -219,8 +220,9 @@
 <nav class="customer-navbar">
     <div class="container">
         <div class="d-flex align-items-center justify-content-between py-2">
-            <a href="#" class="navbar-brand-custom text-decoration-none">
-                🌿 Café Arborea
+            <a href="#" class="navbar-brand-custom text-decoration-none d-flex align-items-center gap-2">
+                <img src="{{ asset('images/logo.png') }}" class="rounded-circle" style="width: 32px; height: 32px; object-fit: cover; background: #fff;" alt="Logo">
+                Café Arborea
             </a>
             <div class="meja-badge">
                 <i class="bi bi-geo-alt me-1"></i>

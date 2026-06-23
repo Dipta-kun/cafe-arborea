@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>@yield('title', 'Dashboard') – Café Arborea Admin</title>
+    <title>@yield('title', 'Dashboard') – Café Arborea</title>
+    <link rel="icon" type="image/png" href="{{ asset('images/logo.png') }}">
 
     {{-- Google Fonts --}}
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -241,7 +242,9 @@
 {{-- SIDEBAR --}}
 <nav id="sidebar">
     <a href="{{ route('admin.dashboard') }}" class="sidebar-brand">
-        <div class="brand-logo">🌿</div>
+        <div class="brand-logo" style="background: none; overflow: hidden; padding: 2px;">
+            <img src="{{ asset('images/logo.png') }}" class="w-100 h-100 object-contain rounded" style="background: #fff; padding: 2px;" alt="Logo">
+        </div>
         <div class="brand-text">
             Café Arborea
             <small>Admin Panel</small>

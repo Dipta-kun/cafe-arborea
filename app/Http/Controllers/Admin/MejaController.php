@@ -82,6 +82,15 @@ class MejaController extends Controller
             ->header('Content-Disposition', 'attachment; filename="' . $filename . '"');
     }
 
+    public function inlineQr(Meja $meja)
+    {
+        $url    = url('/menu/' . $meja->nomor_meja);
+        $qrCode = QrCode::format('svg')->size(300)->margin(2)->generate($url);
+
+        return response($qrCode)
+            ->header('Content-Type', 'image/svg+xml');
+    }
+
     public function cetakQr(Meja $meja)
     {
         $url = url('/menu/' . $meja->nomor_meja);
@@ -92,9 +101,15 @@ class MejaController extends Controller
     {
         $url      = url('/menu/' . $meja->nomor_meja);
         $path     = 'qrcodes/meja_' . $meja->id . '.svg';
-        $qrCode   = QrCode::format('svg')->size(300)->margin(2)->generate($url);
-
-        Storage::disk('public')->put($path, $qrCode);
-        $meja->update(['qr_code' => $path]);
+        
+        try {
+            $qrCode   = QrCode::format('svg')->size(300)->margin(2)->generate($url);
+            Storage::disk('public')->put($path, $qrCode);
+            $meja->update(['qr_code' => $path]);
+        } catch (\Exception $e) {
+            // Silently ignore storage write on Vercel read-only filesystem
+            // The view will fall back to using the dynamic inline QR route
+            $meja->update(['qr_code' => $path]);
+        }
     }
 }

@@ -70,6 +70,7 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
     // Meja CRUD + QR Code
     Route::resource('meja', MejaController::class);
     Route::get('meja/{meja}/qrcode/download', [MejaController::class, 'downloadQr'])->name('meja.qrcode.download');
+    Route::get('meja/{meja}/qrcode/inline', [MejaController::class, 'inlineQr'])->name('meja.qrcode.inline');
     Route::get('meja/{meja}/qrcode/cetak', [MejaController::class, 'cetakQr'])->name('meja.qrcode.cetak');
 
     // Pesanan

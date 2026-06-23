@@ -112,13 +112,13 @@ const mejaTable = $('#tblMeja').DataTable({
         { data: 'nama_meja', defaultContent: '-' },
         { data: 'kapasitas', render: d => `<i class="bi bi-people"></i> ${d}` },
         { data: 'status', render: d => `<span class="badge bg-${statusBadge[d]}">${statusLabel[d]}</span>` },
-        { data: null, render: (d,t,r) => r.qr_code
-            ? `<img src="/storage/${r.qr_code}" class="qr-img" onclick="previewQr(${r.id},'${r.nomor_meja}','/storage/${r.qr_code}')" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" /><div class="qr-placeholder" style="display:none;">📱</div>`
-            : `<div class="qr-placeholder">📱</div>` },
+        { data: null, render: (d,t,r) => 
+            `<img src="/admin/meja/${r.id}/qrcode/inline" class="qr-img" onclick="previewQr(${r.id},'${r.nomor_meja}','/admin/meja/${r.id}/qrcode/inline')" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" /><div class="qr-placeholder" style="display:none;">📱</div>`
+        },
         { data: 'pesanan_count', render: d => `<span class="badge bg-primary rounded-pill">${d}</span>` },
         { data: null, className: 'text-center', render: (d,t,r) =>
             `<button class="btn btn-sm btn-outline-primary rounded-3 me-1" onclick="editMeja(${r.id})"><i class="bi bi-pencil"></i></button>
-             <button class="btn btn-sm btn-outline-success rounded-3 me-1" onclick="previewQr(${r.id},'${r.nomor_meja}','/storage/${r.qr_code}')"><i class="bi bi-qr-code"></i></button>
+             <button class="btn btn-sm btn-outline-success rounded-3 me-1" onclick="previewQr(${r.id},'${r.nomor_meja}','/admin/meja/${r.id}/qrcode/inline')"><i class="bi bi-qr-code"></i></button>
              <button class="btn btn-sm btn-outline-danger rounded-3" onclick="hapusMeja(${r.id},'${r.nomor_meja}')"><i class="bi bi-trash"></i></button>`
         },
     ],
