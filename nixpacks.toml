@@ -1,0 +1,33 @@
+# Nixpacks config for Railway – Laravel 11
+[phases.setup]
+nixPkgs = [
+    "php83",
+    "php83Extensions.pdo",
+    "php83Extensions.pdo_mysql",
+    "php83Extensions.mbstring",
+    "php83Extensions.xml",
+    "php83Extensions.curl",
+    "php83Extensions.zip",
+    "php83Extensions.gd",
+    "php83Extensions.tokenizer",
+    "php83Extensions.bcmath",
+    "php83Extensions.fileinfo",
+    "php83Extensions.openssl",
+    "nodejs_20"
+]
+
+[phases.install]
+cmds = [
+    "curl -sS https://getcomposer.org/installer | php && mv composer.phar /usr/local/bin/composer",
+    "composer install --no-dev --optimize-autoloader --no-interaction",
+    "npm ci",
+    "npm run build"
+]
+
+[phases.build]
+cmds = [
+    "chmod +x start.sh"
+]
+
+[start]
+cmd = "bash start.sh"
