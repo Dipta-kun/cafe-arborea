@@ -20,15 +20,17 @@
 </div>
 
 <div class="card-modern p-4">
-    <table id="tblMenu" class="table table-hover align-middle w-100">
-        <thead>
-            <tr>
-                <th>#</th><th>Foto</th><th>Nama Menu</th><th>Kategori</th>
-                <th>Harga</th><th>Stok</th><th>Terjual</th><th>Tersedia</th><th class="text-center">Aksi</th>
-            </tr>
-        </thead>
-        <tbody></tbody>
-    </table>
+    <div class="table-responsive">
+        <table id="tblMenu" class="table table-hover align-middle w-100">
+            <thead>
+                <tr>
+                    <th>#</th><th>Foto</th><th>Nama Menu</th><th>Kategori</th>
+                    <th>Harga</th><th>Stok</th><th>Terjual</th><th>Tersedia</th><th class="text-center">Aksi</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
 </div>
 
 {{-- Modal --}}

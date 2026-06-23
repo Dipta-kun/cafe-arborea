@@ -12,17 +12,19 @@
     <div class="col-lg-4">
         <div class="card-modern p-4">
             <h6 class="fw-bold mb-3" style="font-family:'Poppins',sans-serif;">Informasi Pesanan</h6>
-            <table class="table table-borderless mb-0 small">
-                <tr><td class="text-muted">Kode</td><td><strong>{{ $pesanan->kode_pesanan }}</strong></td></tr>
-                <tr><td class="text-muted">Pelanggan</td><td>{{ $pesanan->nama_pelanggan }}</td></tr>
-                <tr><td class="text-muted">Meja</td><td>{{ $pesanan->meja?->nomor_meja }}</td></tr>
-                <tr><td class="text-muted">Total Item</td><td>{{ $pesanan->total_item }} item</td></tr>
-                <tr><td class="text-muted">Total</td><td class="fw-bold text-success">{{ $pesanan->total_harga_format }}</td></tr>
-                <tr><td class="text-muted">Waktu</td><td>{{ $pesanan->created_at->isoFormat('D MMM Y, HH:mm') }}</td></tr>
-                <tr><td class="text-muted">Status</td>
-                    <td><span class="badge px-3 py-2 badge-{{ $pesanan->status }}">{{ $pesanan->status_label }}</span></td>
-                </tr>
-            </table>
+            <div class="table-responsive">
+                <table class="table table-borderless mb-0 small">
+                    <tr><td class="text-muted">Kode</td><td><strong>{{ $pesanan->kode_pesanan }}</strong></td></tr>
+                    <tr><td class="text-muted">Pelanggan</td><td>{{ $pesanan->nama_pelanggan }}</td></tr>
+                    <tr><td class="text-muted">Meja</td><td>{{ $pesanan->meja?->nomor_meja }}</td></tr>
+                    <tr><td class="text-muted">Total Item</td><td>{{ $pesanan->total_item }} item</td></tr>
+                    <tr><td class="text-muted">Total</td><td class="fw-bold text-success">{{ $pesanan->total_harga_format }}</td></tr>
+                    <tr><td class="text-muted">Waktu</td><td>{{ $pesanan->created_at->isoFormat('D MMM Y, HH:mm') }}</td></tr>
+                    <tr><td class="text-muted">Status</td>
+                        <td><span class="badge px-3 py-2 badge-{{ $pesanan->status }}">{{ $pesanan->status_label }}</span></td>
+                    </tr>
+                </table>
+            </div>
 
             <hr>
             <h6 class="fw-bold mb-3">Update Status</h6>

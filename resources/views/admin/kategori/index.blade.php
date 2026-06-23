@@ -13,21 +13,23 @@
 </div>
 
 <div class="card-modern p-4">
-    <table id="tblKategori" class="table table-hover align-middle w-100">
-        <thead>
-            <tr>
-                <th>#</th>
-                <th>Nama Kategori</th>
-                <th>Icon</th>
-                <th>Deskripsi</th>
-                <th>Jumlah Menu</th>
-                <th>Status</th>
-                <th>Urutan</th>
-                <th class="text-center">Aksi</th>
-            </tr>
-        </thead>
-        <tbody></tbody>
-    </table>
+    <div class="table-responsive">
+        <table id="tblKategori" class="table table-hover align-middle w-100">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Nama Kategori</th>
+                    <th>Icon</th>
+                    <th>Deskripsi</th>
+                    <th>Jumlah Menu</th>
+                    <th>Status</th>
+                    <th>Urutan</th>
+                    <th class="text-center">Aksi</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
 </div>
 
 {{-- Modal Tambah/Edit --}}

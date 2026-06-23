@@ -20,12 +20,14 @@
 </div>
 
 <div class="card-modern p-4">
-    <table id="tblMeja" class="table table-hover align-middle w-100">
-        <thead>
-            <tr><th>#</th><th>No. Meja</th><th>Nama</th><th>Kapasitas</th><th>Status</th><th>QR Code</th><th>Total Pesanan</th><th class="text-center">Aksi</th></tr>
-        </thead>
-        <tbody></tbody>
-    </table>
+    <div class="table-responsive">
+        <table id="tblMeja" class="table table-hover align-middle w-100">
+            <thead>
+                <tr><th>#</th><th>No. Meja</th><th>Nama</th><th>Kapasitas</th><th>Status</th><th>QR Code</th><th>Total Pesanan</th><th class="text-center">Aksi</th></tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
 </div>
 
 {{-- Modal Tambah/Edit --}}

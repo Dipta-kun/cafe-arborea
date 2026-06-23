@@ -20,12 +20,14 @@
 </div>
 
 <div class="card-modern p-4">
-    <table id="tblPesanan" class="table table-hover align-middle w-100">
-        <thead>
-            <tr><th>Kode</th><th>Pelanggan</th><th>Meja</th><th>Items</th><th>Total</th><th>Waktu</th><th>Status</th><th class="text-center">Aksi</th></tr>
-        </thead>
-        <tbody></tbody>
-    </table>
+    <div class="table-responsive">
+        <table id="tblPesanan" class="table table-hover align-middle w-100">
+            <thead>
+                <tr><th>Kode</th><th>Pelanggan</th><th>Meja</th><th>Items</th><th>Total</th><th>Waktu</th><th>Status</th><th class="text-center">Aksi</th></tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
 </div>
 
 {{-- Modal Detail Pesanan --}}

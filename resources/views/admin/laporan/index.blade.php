@@ -64,12 +64,14 @@
 
 {{-- Table --}}
 <div class="card-modern p-4">
-    <table id="tblLaporan" class="table table-hover align-middle w-100">
-        <thead>
-            <tr><th>#</th><th>Kode</th><th>Pelanggan</th><th>Meja</th><th>Items</th><th>Total</th><th>Status</th><th>Waktu</th></tr>
-        </thead>
-        <tbody id="tblBody"><tr><td colspan="8" class="text-center text-muted py-4">Pilih periode dan klik Tampilkan</td></tr></tbody>
-    </table>
+    <div class="table-responsive">
+        <table id="tblLaporan" class="table table-hover align-middle w-100">
+            <thead>
+                <tr><th>#</th><th>Kode</th><th>Pelanggan</th><th>Meja</th><th>Items</th><th>Total</th><th>Status</th><th>Waktu</th></tr>
+            </thead>
+            <tbody id="tblBody"><tr><td colspan="8" class="text-center text-muted py-4">Pilih periode dan klik Tampilkan</td></tr></tbody>
+        </table>
+    </div>
 </div>
 @endsection
 
