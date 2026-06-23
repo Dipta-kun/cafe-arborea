@@ -13,7 +13,7 @@ return new class extends Migration
             $table->string('nomor_meja', 10)->unique();
             $table->string('nama_meja', 50)->nullable();
             $table->integer('kapasitas')->default(4);
-            $table->enum('status', ['tersedia', 'terisi', 'tidak_aktif'])->default('tersedia');
+            $table->string('status', 20)->default('tersedia'); // tersedia, terisi, tidak_aktif
             $table->string('qr_code')->nullable();
             $table->text('keterangan')->nullable();
             $table->timestamps();

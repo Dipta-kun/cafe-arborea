@@ -10,12 +10,13 @@ RUN apt-get update && apt-get install -y \
     libonig-dev \
     libxml2-dev \
     libzip-dev \
+    libsqlite3-dev \
     zip \
     unzip \
     nodejs \
     npm \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
-    && docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd zip \
+    && docker-php-ext-install pdo pdo_sqlite pdo_mysql mbstring exif pcntl bcmath gd zip \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Enable Apache mod_rewrite
@@ -54,9 +55,12 @@ RUN composer dump-autoload --optimize
 # Build frontend assets
 RUN npm run build
 
+# Create SQLite database file
+RUN mkdir -p database && touch database/database.sqlite
+
 # Set proper permissions
-RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
-RUN chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache
+RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache /var/www/html/database
+RUN chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache /var/www/html/database
 
 # Create the entrypoint script
 RUN echo '#!/bin/bash\n\
@@ -72,8 +76,14 @@ if [ -z "$APP_KEY" ]; then\n\
     php artisan key:generate --force\n\
 fi\n\
 \n\
-# Run migrations\n\
-php artisan migrate --force 2>/dev/null || true\n\
+# Ensure SQLite database exists\n\
+touch database/database.sqlite\n\
+chown www-data:www-data database/database.sqlite\n\
+chmod 664 database/database.sqlite\n\
+\n\
+# Run migrations and seed\n\
+php artisan migrate --force\n\
+php artisan db:seed --force 2>/dev/null || true\n\
 \n\
 # Cache config & routes\n\
 php artisan config:cache\n\

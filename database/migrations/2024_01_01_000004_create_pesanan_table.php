@@ -15,13 +15,7 @@ return new class extends Migration
             $table->string('nama_pelanggan', 100);
             $table->decimal('total_harga', 12, 2)->default(0);
             $table->integer('total_item')->default(0);
-            $table->enum('status', [
-                'menunggu',
-                'diproses',
-                'siap_disajikan',
-                'selesai',
-                'dibatalkan'
-            ])->default('menunggu');
+            $table->string('status', 20)->default('menunggu'); // menunggu, diproses, siap_disajikan, selesai, dibatalkan
             $table->text('catatan')->nullable();
             $table->timestamp('waktu_pesan')->nullable();
             $table->timestamp('waktu_selesai')->nullable();
