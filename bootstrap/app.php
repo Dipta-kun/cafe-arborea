@@ -11,6 +11,9 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
+        // Trust all proxies (Cloudflare Tunnel / Render)
+        $middleware->trustProxies(at: '*');
+
         // Exclude customer-facing routes from CSRF so pelanggan tidak kena "419 Page Expired"
         $middleware->validateCsrfTokens(except: [
             'keranjang/*',
