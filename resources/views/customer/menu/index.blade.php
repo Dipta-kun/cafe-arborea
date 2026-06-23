@@ -242,7 +242,7 @@ function tambahKeranjang(menuId, nama) {
                 updateCartUI(res.count, res.total_format);
                 loadCart();
             } else showToast('error', res.message);
-        }).fail(() => showToast('error', 'Gagal menambahkan item.'));
+        }).fail(xhr => showToast('error', xhr.responseJSON?.message ?? 'Gagal menambahkan item.'));
 }
 
 // Load cart
@@ -299,7 +299,8 @@ function renderCart(items, total) {
 
 function ubahJumlah(id, jumlah) {
     $.ajax({ url: UPDATE_URL.replace('__ID__', id), type: 'PATCH', data: { jumlah },
-        success: res => { updateCartUI(res.count, res.total_format); renderCart(res.items, res.total_format); }
+        success: res => { updateCartUI(res.count, res.total_format); renderCart(res.items, res.total_format); },
+        error: xhr => { showToast('error', xhr.responseJSON?.message ?? 'Gagal mengubah jumlah.'); }
     });
 }
 

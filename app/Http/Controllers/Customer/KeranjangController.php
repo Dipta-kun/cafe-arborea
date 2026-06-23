@@ -41,14 +41,26 @@ class KeranjangController extends Controller
         $menu = Menu::findOrFail($request->menu_id);
 
         if (!$menu->is_tersedia || $menu->stok <= 0) {
-            return response()->json(['success' => false, 'message' => 'Menu tidak tersedia.'], 422);
+            return response()->json(['success' => false, 'message' => 'Menu tidak tersedia atau habis.'], 422);
         }
 
         $cart = $this->getCart();
         $key  = 'menu_' . $menu->id;
 
+        $requestedJumlah = $request->jumlah;
         if (isset($cart[$key])) {
-            $cart[$key]['jumlah']  += $request->jumlah;
+            $requestedJumlah += $cart[$key]['jumlah'];
+        }
+
+        if ($requestedJumlah > $menu->stok) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Stok tidak mencukupi. Sisa stok: ' . $menu->stok
+            ], 422);
+        }
+
+        if (isset($cart[$key])) {
+            $cart[$key]['jumlah']  = $requestedJumlah;
             $cart[$key]['subtotal'] = $cart[$key]['jumlah'] * $menu->harga;
         } else {
             $cart[$key] = [
@@ -88,6 +100,14 @@ class KeranjangController extends Controller
         if ($request->jumlah == 0) {
             unset($cart[$id]);
         } else {
+            $menu = Menu::findOrFail($cart[$id]['menu_id']);
+            if ($request->jumlah > $menu->stok) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Stok tidak mencukupi. Sisa stok: ' . $menu->stok
+                ], 422);
+            }
+
             $cart[$id]['jumlah']  = $request->jumlah;
             $cart[$id]['subtotal'] = $cart[$id]['harga'] * $request->jumlah;
         }

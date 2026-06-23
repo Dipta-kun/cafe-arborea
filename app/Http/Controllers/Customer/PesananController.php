@@ -40,7 +40,15 @@ class PesananController extends Controller
                     DB::rollBack();
                     return response()->json([
                         'success' => false,
-                        'message' => $menu->nama_menu . ' sudah tidak tersedia.'
+                        'message' => $menu->nama_menu . ' sudah tidak tersedia atau habis.'
+                    ], 422);
+                }
+
+                if ($item['jumlah'] > $menu->stok) {
+                    DB::rollBack();
+                    return response()->json([
+                        'success' => false,
+                        'message' => 'Stok ' . $menu->nama_menu . ' tidak mencukupi. Sisa stok: ' . $menu->stok
                     ], 422);
                 }
 
