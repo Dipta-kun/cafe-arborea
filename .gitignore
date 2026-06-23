@@ -2,7 +2,7 @@
 .DS_Store
 .env
 .env.backup
-.env.production
+# .env.production is committed for Render deploy (no secrets, uses env vars)
 .phpactor.json
 .phpunit.result.cache
 /.fleet
