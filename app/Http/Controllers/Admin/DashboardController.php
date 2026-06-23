@@ -34,15 +34,28 @@ class DashboardController extends Controller
 
     public function chartPenjualanBulanan()
     {
-        $data = Pesanan::select(
-                DB::raw('MONTH(created_at) as bulan'),
-                DB::raw('SUM(total_harga) as total')
-            )
-            ->whereYear('created_at', date('Y'))
-            ->whereIn('status', ['selesai', 'siap_disajikan'])
-            ->groupBy('bulan')
-            ->orderBy('bulan')
-            ->get();
+        $driver = DB::connection()->getDriverName();
+        if ($driver === 'pgsql') {
+            $data = Pesanan::select(
+                    DB::raw('EXTRACT(MONTH FROM created_at) as bulan'),
+                    DB::raw('SUM(total_harga) as total')
+                )
+                ->whereYear('created_at', date('Y'))
+                ->whereIn('status', ['selesai', 'siap_disajikan'])
+                ->groupBy('bulan')
+                ->orderBy('bulan')
+                ->get();
+        } else {
+            $data = Pesanan::select(
+                    DB::raw('MONTH(created_at) as bulan'),
+                    DB::raw('SUM(total_harga) as total')
+                )
+                ->whereYear('created_at', date('Y'))
+                ->whereIn('status', ['selesai', 'siap_disajikan'])
+                ->groupBy('bulan')
+                ->orderBy('bulan')
+                ->get();
+        }
 
         $labels = ['Jan','Feb','Mar','Apr','Mei','Jun','Jul','Agu','Sep','Okt','Nov','Des'];
         $values = array_fill(0, 12, 0);
@@ -71,14 +84,26 @@ class DashboardController extends Controller
 
     public function chartPesananHarian()
     {
-        $data = Pesanan::select(
-                DB::raw('DATE(created_at) as tanggal'),
-                DB::raw('COUNT(*) as total')
-            )
-            ->where('created_at', '>=', now()->subDays(7))
-            ->groupBy('tanggal')
-            ->orderBy('tanggal')
-            ->get();
+        $driver = DB::connection()->getDriverName();
+        if ($driver === 'pgsql') {
+            $data = Pesanan::select(
+                    DB::raw('created_at::date as tanggal'),
+                    DB::raw('COUNT(*) as total')
+                )
+                ->where('created_at', '>=', now()->subDays(7))
+                ->groupBy('tanggal')
+                ->orderBy('tanggal')
+                ->get();
+        } else {
+            $data = Pesanan::select(
+                    DB::raw('DATE(created_at) as tanggal'),
+                    DB::raw('COUNT(*) as total')
+                )
+                ->where('created_at', '>=', now()->subDays(7))
+                ->groupBy('tanggal')
+                ->orderBy('tanggal')
+                ->get();
+        }
 
         return response()->json([
             'labels' => $data->pluck('tanggal'),
