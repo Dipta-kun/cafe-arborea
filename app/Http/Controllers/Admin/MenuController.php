@@ -69,6 +69,8 @@ class MenuController extends Controller
             }
             $path = $request->file('foto')->store('menu', 'public');
             $data['foto'] = $path;
+        } else {
+            unset($data['foto']);
         }
 
         $data['is_tersedia'] = $request->boolean('is_tersedia', true);
