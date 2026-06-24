@@ -38,8 +38,9 @@ class MenuController extends Controller
         $data = $request->validated();
 
         if ($request->hasFile('foto')) {
-            $path = $request->file('foto')->store('menu', 'public');
-            $data['foto'] = $path;
+            $file = $request->file('foto');
+            $base64 = 'data:' . $file->getMimeType() . ';base64,' . base64_encode(file_get_contents($file->getRealPath()));
+            $data['foto'] = $base64;
         }
 
         $data['is_tersedia'] = $request->boolean('is_tersedia', true);
@@ -64,11 +65,12 @@ class MenuController extends Controller
         $data = $request->validated();
 
         if ($request->hasFile('foto')) {
-            if ($menu->foto) {
+            if ($menu->foto && !str_starts_with($menu->foto, 'data:')) {
                 Storage::disk('public')->delete($menu->foto);
             }
-            $path = $request->file('foto')->store('menu', 'public');
-            $data['foto'] = $path;
+            $file = $request->file('foto');
+            $base64 = 'data:' . $file->getMimeType() . ';base64,' . base64_encode(file_get_contents($file->getRealPath()));
+            $data['foto'] = $base64;
         } else {
             unset($data['foto']);
         }
@@ -85,7 +87,7 @@ class MenuController extends Controller
 
     public function destroy(Menu $menu)
     {
-        if ($menu->foto) {
+        if ($menu->foto && !str_starts_with($menu->foto, 'data:')) {
             Storage::disk('public')->delete($menu->foto);
         }
         $menu->delete();

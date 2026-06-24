@@ -23,7 +23,6 @@ class MenuTest extends TestCase
 
     public function test_can_create_menu_with_image()
     {
-        Storage::fake('public');
         $user = User::where('email', 'mayang@gmail.com')->first();
         $kategori = Kategori::first();
 
@@ -43,14 +42,11 @@ class MenuTest extends TestCase
         $menu = Menu::where('nama_menu', 'Teh Manis Hangat')->first();
         $this->assertNotNull($menu);
         $this->assertNotNull($menu->foto);
-        
-        // Assert file exists in fake public disk
-        Storage::disk('public')->assertExists($menu->foto);
+        $this->assertStringStartsWith('data:image/jpeg;base64,', $menu->foto);
     }
 
     public function test_can_update_menu_image()
     {
-        Storage::fake('public');
         $user = User::where('email', 'mayang@gmail.com')->first();
         $menu = Menu::first();
 
@@ -73,9 +69,7 @@ class MenuTest extends TestCase
         $menu->refresh();
         $this->assertNotEquals($originalFoto, $menu->foto);
         $this->assertNotNull($menu->foto);
-        
-        // Assert file exists in fake public disk
-        Storage::disk('public')->assertExists($menu->foto);
+        $this->assertStringStartsWith('data:image/png;base64,', $menu->foto);
     }
 
     public function test_updating_menu_without_image_keeps_original_image()

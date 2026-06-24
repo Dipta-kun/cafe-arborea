@@ -53,6 +53,9 @@ class Menu extends Model
     public function getFotoUrlAttribute()
     {
         if ($this->foto) {
+            if (str_starts_with($this->foto, 'data:')) {
+                return $this->foto;
+            }
             return asset('storage/' . $this->foto);
         }
         return asset('images/menu-placeholder.jpg');

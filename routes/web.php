@@ -83,6 +83,16 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
     Route::get('laporan', [LaporanController::class, 'index'])->name('laporan.index');
     Route::get('laporan/export-pdf', [LaporanController::class, 'exportPdf'])->name('laporan.pdf');
     Route::get('laporan/data', [LaporanController::class, 'getData'])->name('laporan.data');
+
+    // Run migrations utility route
+    Route::get('run-migrations', function () {
+        try {
+            \Illuminate\Support\Facades\Artisan::call('migrate', ['--force' => true]);
+            return 'Migrations ran successfully! Output: <pre>' . \Illuminate\Support\Facades\Artisan::output() . '</pre>';
+        } catch (\Exception $e) {
+            return 'Error running migrations: ' . $e->getMessage();
+        }
+    })->name('run_migrations');
 });
 
 /*
