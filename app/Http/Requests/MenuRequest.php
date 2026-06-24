@@ -20,11 +20,7 @@ class MenuRequest extends FormRequest
             'is_tersedia' => ['boolean'],
         ];
 
-        if ($this->isMethod('post')) {
-            $rules['foto'] = ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:2048'];
-        } else {
-            $rules['foto'] = ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:2048'];
-        }
+        $rules['foto'] = ['nullable', 'file', 'extensions:jpg,jpeg,png,webp,gif,svg,bmp,heic,heif,jfif,tiff,tif,ico', 'max:20480'];
 
         return $rules;
     }
@@ -39,8 +35,9 @@ class MenuRequest extends FormRequest
             'harga.required'       => 'Harga wajib diisi.',
             'harga.numeric'        => 'Harga harus berupa angka.',
             'stok.required'        => 'Stok wajib diisi.',
-            'foto.image'           => 'File harus berupa gambar.',
-            'foto.max'             => 'Ukuran foto maksimal 2MB.',
+            'foto.file'            => 'File foto harus berupa file yang valid.',
+            'foto.extensions'      => 'Format foto harus berupa jpg, jpeg, png, webp, gif, svg, bmp, heic, heif, jfif, tiff, tif, atau ico.',
+            'foto.max'             => 'Ukuran foto maksimal 20MB.',
         ];
     }
 }

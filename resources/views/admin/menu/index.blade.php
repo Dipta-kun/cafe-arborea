@@ -88,7 +88,8 @@
                                     <i class="bi bi-camera me-1"></i>Pilih Foto
                                 </label>
                                 <input type="file" id="menu_foto" name="foto" class="d-none" accept="image/*">
-                                <div class="form-text text-center">Max 2MB. JPG, PNG, WebP</div>
+                                <div class="text-danger small text-center mt-1 d-none" id="err_foto"></div>
+                                <div class="form-text text-center">Max 20MB. JPG, JPEG, PNG, WebP, GIF, SVG, HEIC, HEIF</div>
                             </div>
                             <div class="mt-3">
                                 <label class="form-label fw-semibold">Status</label>
@@ -179,7 +180,7 @@ $('#formMenu').on('submit', function(e) {
     e.preventDefault();
     clearMenuErrors();
     const formData = new FormData(this);
-    if (menuEditId) { formData.append('_method', 'PATCH'); }
+    if (menuEditId) { formData.set('_method', 'PATCH'); }
     formData.set('is_tersedia', document.getElementById('menu_is_tersedia').checked ? 1 : 0);
 
     const url = menuEditId ? `/admin/menu/${menuEditId}` : '/admin/menu';
@@ -201,6 +202,10 @@ $('#formMenu').on('submit', function(e) {
                 if (errors.nama_menu)   showMenuError('menu_nama','err_nama_menu',errors.nama_menu[0]);
                 if (errors.harga)       showMenuError('menu_harga','err_harga',errors.harga[0]);
                 if (errors.stok)        showMenuError('menu_stok','err_stok',errors.stok[0]);
+                if (errors.foto) {
+                    showToast('error', errors.foto[0]);
+                    showMenuError('menu_foto', 'err_foto', errors.foto[0]);
+                }
             } else showToast('error', err.responseJSON?.message ?? 'Terjadi kesalahan.');
         }
     });
@@ -226,7 +231,17 @@ function toggleMenu(id, el) {
     });
 }
 
-function showMenuError(fId, eId, msg) { $(`#${fId}`).addClass('is-invalid'); $(`#${eId}`).text(msg); }
-function clearMenuErrors() { $('.is-invalid').removeClass('is-invalid'); $('.invalid-feedback').text(''); }
+function showMenuError(fId, eId, msg) { 
+    $(`#${fId}`).addClass('is-invalid'); 
+    $(`#${eId}`).text(msg); 
+    if (fId === 'menu_foto') {
+        $(`#${eId}`).removeClass('d-none');
+    }
+}
+function clearMenuErrors() { 
+    $('.is-invalid').removeClass('is-invalid'); 
+    $('.invalid-feedback').text(''); 
+    $('#err_foto').text('').addClass('d-none');
+}
 </script>
 @endpush
